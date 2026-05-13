@@ -2,18 +2,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { betterAuth } from 'better-auth';
-import { mongodbAdapter } from 'better-auth/adapters/mongodb';
+import { memoryAdapter } from 'better-auth/adapters/memory';
 import { bearer, emailOTP } from 'better-auth/plugins';
-import { MongoClient } from 'mongodb';
-
-const client = new MongoClient(process.env.MONGODB_URI!);
-const db = client.db();
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL!,
   secret: process.env.BETTER_AUTH_SECRET!,
 
-  database: mongodbAdapter(db),
+  database: memoryAdapter({}),
 
   emailAndPassword: {
     enabled: true,
